@@ -64,7 +64,7 @@
     <div id="app" class="container mx-auto p-8 rounded-xl shadow-lg bg-card border border-gray-700">
     </div>
     <footer class="mt-8 text-center text-gray-500 text-sm">
-        <p>Developed for the Emmanuel Enwesi Foundation</p>
+        <p>Developed by Emmanuel Enwesi & EEF</p>
     </footer>
     <script>
         // REPLACE THIS URL WITH YOUR DEPLOYED GOOGLE APPS SCRIPT URL
@@ -81,7 +81,6 @@
             { question: "Which attack involves the attacker placing themselves in the middle of a communication session?", options: ["Replay attack", "Unauthorized modification", "Impersonation", "Man-In-The-Middle (MITM) attack"], answer: "Man-In-The-Middle (MITM) attack" },
             { question: "What security principle ensures systems and data are accessible at the time users need them?", options: ["Integrity", "Confidentiality", "Availability", "Non-repudiation"], answer: "Availability" },
             { question: "In the context of availability, what term is a measure of the degree to which an organization depends on an information system?", options: ["Criticality", "Reliability", "Dependability", "Feasibility"], answer: "Criticality" },
-            { question: "Which of the following is a way to mitigate a Denial of Service attack?", options: ["Using backups", "Using redundant components", "Using firewalls to block unauthorized connections", "Using redundant power"], answer: "Using firewalls to block unauthorized connections" },
             { question: "What is the legal term for protection against an individual falsely denying having performed a particular action?", options: ["Authentication", "Authorization", "Non-repudiation", "Accounting"], answer: "Non-repudiation" },
             { question: "What is the process of verifying a user's claimed identity?", options: ["Authorization", "Authentication", "Identification", "Accounting"], answer: "Authentication" },
             { question: "Which of the following is a 'something you have' method of authentication?", options: ["Biometrics", "Password", "PIN", "Token"], answer: "Token" },
@@ -90,17 +89,8 @@
             { question: "What step in the triple A process involves maintaining logs of user activity?", options: ["Authentication", "Authorization", "Accounting", "Identification"], answer: "Accounting" },
             { question: "What is 'the right of an individual to control the distribution of information about themselves'?", options: ["Confidentiality", "Privacy", "Non-repudiation", "Integrity"], answer: "Privacy" },
             { question: "Which regulation has multinational implications and applies to any organization handling private data of people in the EU?", options: ["HIPAA", "SOX", "GDPR", "PCI DSS"], answer: "GDPR" },
-            { question: "Which of the following is NOT one of the three components that express risk?", options: ["Likelihood", "Threats", "Impact", "Vulnerability"], answer: "Vulnerability" },
             { question: "What is a measure of the extent to which an entity is threatened by a potential circumstance or event?", options: ["Vulnerability", "Threat", "Risk", "Asset"], answer: "Risk" },
-            { question: "What is a gap or weakness in an organization's protection of its valuable assets?", options: ["Risk", "Threat", "Impact", "Vulnerability"], answer: "Vulnerability" },
-            { question: "A person or thing that aims to exploit a vulnerability is called a/an:", options: ["Asset", "Vulnerability", "Threat", "Impact"], answer: "Threat" },
-            { question: "What is the magnitude of harm that can be expected from a security event?", options: ["Risk", "Threat", "Likelihood", "Impact"], answer: "Impact" },
-            { question: "What is a documented, lowest level of security configuration allowed by a standard or organization?", options: ["Baseline", "Standard", "Policy", "Procedure"], answer: "Baseline" },
-            { question: "Which of the following is a threat related to confidentiality?", options: ["Denial of Service", "Unauthorized modification", "Snooping", "Hardware failures"], answer: "Snooping" },
-            { question: "According to the provided text, who is responsible for identifying risk within an organization?", options: ["Only the security team", "Only management", "Only developers", "Employees at all levels"], answer: "Employees at all levels" },
-            { question: "Which of the following is not a common method of authentication?", options: ["Something you know", "Something you are", "Something you see", "Something you have"], answer: "Something you see" },
-            { question: "What does 'non-repudiation methodologies' ensure?", options: ["That data is always available", "That people are held responsible for transactions they conducted", "That data is not altered", "That only authorized users access systems"], answer: "That people are held responsible for transactions they conducted" },
-            { question: "Which concept is defined as 'the property that data has not been altered in an unauthorized manner'?", options: ["Confidentiality", "Integrity", "Availability", "Authorization"], answer: "Integrity" }
+            { question: "What is a gap or weakness in an organization's protection of its valuable assets?", options: ["Risk", "Threat", "Impact", "Vulnerability"], answer: "Vulnerability" }
         ];
 
         let currentQuestionIndex = 0;
@@ -122,9 +112,9 @@
         function renderWelcomeScreen() {
             app.innerHTML = `
                 <div class="text-center">
-                    <h1 class="text-4xl font-bold mb-4 text-white">Emmanuel Enwesi Foundation Quiz 🏆</h1>
+                    <h1 class="text-4xl font-bold mb-4 text-white">Emmanuel Enwesi Foundation Week 1 Quiz 🏆</h1>
                     <p class="text-lg text-gray-300 mb-6">Test your knowledge on cybersecurity fundamentals!</p>
-                    <input type="text" id="userNameInput" placeholder="Enter your name" class="w-full md:w-2/3 px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600 mb-4 focus:outline-none focus:ring-2 focus:ring-[#071ca6]">
+                    <input type="text" id="userNameInput" placeholder="Enter your name e.g 'Emmanuel Enwesi Group X'" class="w-full md:w-2/3 px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600 mb-4 focus:outline-none focus:ring-2 focus:ring-[#071ca6]">
                     <button onclick="startGame()" class="btn-primary w-full md:w-1/2 py-3 rounded-md text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105">Start Quiz</button>
                     <button onclick="renderLeaderboard()" class="btn-secondary w-full md:w-1/2 py-3 mt-4 rounded-md text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105">View Leaderboard</button>
                 </div>
