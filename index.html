@@ -64,13 +64,13 @@
     <div id="app" class="container mx-auto p-8 rounded-xl shadow-lg bg-card border border-gray-700">
     </div>
     <footer class="mt-8 text-center text-gray-500 text-sm">
-        <p>Developed by Emmanuel Enwesi & EEF</p>
+        <p>Developed by Emmanuel Enwesi Foundation</p>
     </footer>
     <script>
         // REPLACE THIS URL WITH YOUR DEPLOYED GOOGLE APPS SCRIPT URL
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw4EsNikVpkk6uzodiR4XbRU7ZOEFl7czS-DyRWTJRaGsV9JguSpzNooUL2XDcLMAG3JQ/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzhK0VJoDGLGw_juntJ-e94iQphYOPA0mKUu6uItxJVyre4JlkpKWjYj6OLBUBWknD52w/exec';
 
-        const quizQuestions = [
+        const allQuizQuestions = [
             { question: "Which security principle protects against improper disclosure of information?", options: ["Integrity", "Confidentiality", "Availability", "Non-repudiation"], answer: "Confidentiality" },
             { question: "What does 'PII' stand for?", options: ["Personal Identity Information", "Personally Identifiable Information", "Private Information Initiative", "Protected Identity Information"], answer: "Personally Identifiable Information" },
             { question: "Which term refers to information about one's health status that needs protection?", options: ["PII", "CSI", "PHI", "DMI"], answer: "PHI" },
@@ -80,7 +80,6 @@
             { question: "Which attack is best mitigated by the principle of least privilege?", options: ["Impersonation", "Man-In-The-Middle", "Unauthorized modification", "Replay attacks"], answer: "Unauthorized modification" },
             { question: "Which attack involves the attacker placing themselves in the middle of a communication session?", options: ["Replay attack", "Unauthorized modification", "Impersonation", "Man-In-The-Middle (MITM) attack"], answer: "Man-In-The-Middle (MITM) attack" },
             { question: "What security principle ensures systems and data are accessible at the time users need them?", options: ["Integrity", "Confidentiality", "Availability", "Non-repudiation"], answer: "Availability" },
-            { question: "In the context of availability, what term is a measure of the degree to which an organization depends on an information system?", options: ["Criticality", "Reliability", "Dependability", "Feasibility"], answer: "Criticality" },
             { question: "What is the legal term for protection against an individual falsely denying having performed a particular action?", options: ["Authentication", "Authorization", "Non-repudiation", "Accounting"], answer: "Non-repudiation" },
             { question: "What is the process of verifying a user's claimed identity?", options: ["Authorization", "Authentication", "Identification", "Accounting"], answer: "Authentication" },
             { question: "Which of the following is a 'something you have' method of authentication?", options: ["Biometrics", "Password", "PIN", "Token"], answer: "Token" },
@@ -90,7 +89,18 @@
             { question: "What is 'the right of an individual to control the distribution of information about themselves'?", options: ["Confidentiality", "Privacy", "Non-repudiation", "Integrity"], answer: "Privacy" },
             { question: "Which regulation has multinational implications and applies to any organization handling private data of people in the EU?", options: ["HIPAA", "SOX", "GDPR", "PCI DSS"], answer: "GDPR" },
             { question: "What is a measure of the extent to which an entity is threatened by a potential circumstance or event?", options: ["Vulnerability", "Threat", "Risk", "Asset"], answer: "Risk" },
-            { question: "What is a gap or weakness in an organization's protection of its valuable assets?", options: ["Risk", "Threat", "Impact", "Vulnerability"], answer: "Vulnerability" }
+            { question: "What is a gap or weakness in an organization's protection of its valuable assets?", options: ["Risk", "Threat", "Impact", "Vulnerability"], answer: "Vulnerability" },
+            { question: "Which term describes a user who intentionally tries to gain unauthorized access to computer systems without malicious intent?", options: ["Black hat hacker", "White hat hacker", "Grey hat hacker", "Script kiddie"], answer: "Grey hat hacker" },
+            { question: "What is a malicious software that replicates itself and spreads to other computers without human interaction?", options: ["Trojan horse", "Spyware", "Ransomware", "Worm"], answer: "Worm" },
+            { question: "What is the term for an attempt to trick users into divulging personal information by impersonating a trustworthy entity?", options: ["Spoofing", "Phishing", "Sniffing", "DDoS attack"], answer: "Phishing" },
+            { question: "What is a firewall in cybersecurity?", options: ["A program that checks for computer viruses", "A hardware or software solution that monitors and filters network traffic", "A tool for recovering lost files", "A type of encryption"], answer: "A hardware or software solution that monitors and filters network traffic" },
+            { question: "What is an exploit in cybersecurity?", options: ["A legal loophole in a software license", "A way to discover vulnerabilities", "A piece of software or data that takes advantage of a bug or vulnerability", "A new feature in a security system"], answer: "A piece of software or data that takes advantage of a bug or vulnerability" },
+            { question: "Which of the following is a 'something you are' method of authentication?", options: ["Password", "PIN", "Token", "Fingerprint scan"], answer: "Fingerprint scan" },
+            { question: "What does the 'S' in HTTPS stand for?", options: ["Secure", "Service", "Standard", "System"], answer: "Secure" },
+            { question: "Which of the following is an example of a brute-force attack?", options: ["Sending a malicious email", "Entering many passwords to guess the correct one", "Redirecting a user to a fake website", "Installing a keylogger"], answer: "Entering many passwords to guess the correct one" },
+            { question: "What is the purpose of a Security Information and Event Management (SIEM) system?", options: ["To manage physical access to a server room", "To detect and respond to security threats by collecting and analyzing log data", "To block all incoming internet traffic", "To create a list of approved websites"], answer: "To detect and respond to security threats by collecting and analyzing log data" },
+            { question: "What is the security term for the practice of making data unreadable to unauthorized users?", options: ["Hashing", "Decryption", "Encoding", "Encryption"], answer: "Encryption" },
+            { question: "What is the main goal of a Denial of Service (DoS) attack?", options: ["To steal user data", "To disrupt the normal traffic of a targeted server, service, or network", "To install a virus", "To gain unauthorized administrative access"], answer: "To disrupt the normal traffic of a targeted server, service, or network" }
         ];
 
         let currentQuestionIndex = 0;
@@ -98,6 +108,7 @@
         let userName = '';
         let timer = null;
         let timeLeft = 15;
+        let quizQuestions = [];
         const app = document.getElementById('app');
 
         window.onload = () => {
@@ -122,14 +133,14 @@
         }
 
         function renderQuestion() {
-            if (currentQuestionIndex >= quizQuestions.length) {
+            if (currentQuestionIndex >= 20) {
                 endGame();
                 return;
             }
             const questionData = quizQuestions[currentQuestionIndex];
             app.innerHTML = `
                 <div class="text-center mb-6">
-                    <h2 class="text-3xl font-bold text-white">Question ${currentQuestionIndex + 1} of ${quizQuestions.length}</h2>
+                    <h2 class="text-3xl font-bold text-white">Question ${currentQuestionIndex + 1} of 20</h2>
                     <p class="text-lg text-gray-400 mt-2">Time left: <span id="timer" class="font-bold" style="color: #071ca6;">15</span>s</p>
                     <div class="w-full bg-gray-700 rounded-full h-2.5 mt-2">
                         <div id="progressBar" class="h-2.5 rounded-full" style="background-color: #d40c31; width: 100%;"></div>
@@ -208,7 +219,7 @@
             app.innerHTML = `
                 <div class="text-center">
                     <h2 class="text-4xl font-bold text-white mb-4">Quiz Complete! 🎉</h2>
-                    <p class="text-2xl text-gray-300 mb-6">${userName}, your final score is: <span class="font-extrabold" style="color: #071ca6;">${score}</span> out of ${quizQuestions.length}</p>
+                    <p class="text-2xl text-gray-300 mb-6">${userName}, your final score is: <span class="font-extrabold" style="color: #071ca6;">${score}</span> out of 20</p>
                     <button onclick="renderWelcomeScreen()" class="btn-primary w-full md:w-1/2 py-3 rounded-md text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105">Play Again</button>
                     <button onclick="renderLeaderboard()" class="btn-secondary w-full md:w-1/2 py-3 mt-4 rounded-md text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105">View Leaderboard</button>
                 </div>
@@ -228,7 +239,7 @@
             }
             currentQuestionIndex = 0;
             score = 0;
-            shuffleArray(quizQuestions);
+            quizQuestions = shuffleArray([...allQuizQuestions]).slice(0, 20);
             renderQuestion();
         }
 
